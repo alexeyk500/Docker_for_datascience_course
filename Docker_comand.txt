@@ -1,0 +1,65 @@
+# Команды для Docker
+1) Gосмотреть какие контейнеры Docker запущены - docker ps
+
+2) Попасть внутрь контейнера - docker exec -it <mycontainer> bash
+    docker exec -it d4c1d8bec0ff bash
+        a) Посмотреть текущую папку - pwd
+        б) Посмотреть содержимое папаки - ls
+
+3) Скопировать файлы внутрь контейнера - docker cp foo.txt mycontainer:/foo.txt
+    docker cp wine.data d4c1d8bec0ff:/home/jovyan/wine.data
+
+4) Запуск контейнера docker с jupiter notebook
+    docker run -p 8888:8888 jupyter/scipy-notebook:17aba6048f44
+
+5) Монтирование Volume
+    docker run -v /Users/alexeystyupan/Desktop/Docker:/home/jovyan -p 8888:8888 jupyter/scipy-notebook:17aba6048f44
+
+6) Импорт библиотек
+    a) создать dockerfile
+    б) прописать в dockerfile библиотеки котрые нужно импортировать
+        FROM jupyter/scipy-notebook:17aba6048f44
+            RUN pip install --upgrade pip
+            RUN pip install xgboost
+    г) смонтировать новый контейнер - выполнить build для контенера - docker build -t my_notebook .
+        где my_notebook - имя для контейнера который создаем
+    в) запуск смонтированнаого контенера командой 
+        docker run -v /Users/alexeystyupan/Desktop/Docker:/home/jovyan -p 8888:8888 my_notebook
+        где my_notebook - имя созданного контейнера
+
+7) Docker compose - Использование нескольких контейнеров Docker одновременно
+    а) Создать файл - docker-compose.yml
+    б) Прописать настройки 
+        version: '3'
+        services:
+        jupiter:
+            build:
+                context: .
+                dockerfile: dockerfile
+            volumes: 
+                - ./:/home/jovyan
+            ports: 
+                - "8888:8888"
+    в) Выполнить команду docker-compose up 
+
+8) Подключение Postgressql
+    а) в файл docker-compose.yml в секцию services дописываем
+                db:
+                image: postgres
+                environment:
+                    POSTGRES_PASSWORD: example
+                ports:
+                    - "5432:5432"
+                volumes:
+                    - pgdata:/var/lib/postgresql/data
+        volumes: 
+            pgdata:
+    б) Пересобрать контейнер - Выполнив команду docker-compose up --build
+
+9) Посмотреть данные сохраненные в Volume - docker volume ls
+
+=======================================================================================
+
+Работа с Git
+
+1) Создать пустой репозиторий в текущей папке - git init
