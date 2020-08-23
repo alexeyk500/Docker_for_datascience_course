@@ -1,19 +1,21 @@
 # Команды для Docker
-1) Gосмотреть какие контейнеры Docker запущены - docker ps
+1) Запуск контейнера docker с jupiter notebook
+    docker run -p 8888:8888 jupyter/scipy-notebook:17aba6048f44
 
-2) Попасть внутрь контейнера - docker exec -it <mycontainer> bash
-    docker exec -it d4c1d8bec0ff bash
+2) Gосмотреть какие контейнеры Docker запущены - docker ps
+
+3) Попасть внутрь контейнера - docker exec -it <mycontainer> bash
+    docker exec -it 36be7240b81f bash
+
         a) Посмотреть текущую папку - pwd
         б) Посмотреть содержимое папаки - ls
 
-3) Скопировать файлы внутрь контейнера - docker cp foo.txt mycontainer:/foo.txt
+4) Скопировать файлы внутрь контейнера - docker cp foo.txt mycontainer:/foo.txt
     docker cp wine.data d4c1d8bec0ff:/home/jovyan/wine.data
-
-4) Запуск контейнера docker с jupiter notebook
-    docker run -p 8888:8888 jupyter/scipy-notebook:17aba6048f44
+    docker cp wine.data 6c2956c0a528:/home/jovyan/wine.data
 
 5) Монтирование Volume
-    docker run -v /Users/alexeystyupan/Desktop/Docker:/home/jovyan -p 8888:8888 jupyter/scipy-notebook:17aba6048f44
+    docker run -v /Users/alexeyk500/Desktop/Docker:/home/jovyan -p 8888:8888 jupyter/scipy-notebook:17aba6048f44
 
 6) Импорт библиотек
     a) создать dockerfile
@@ -24,7 +26,7 @@
     г) смонтировать новый контейнер - выполнить build для контенера - docker build -t my_notebook .
         где my_notebook - имя для контейнера который создаем
     в) запуск смонтированнаого контенера командой 
-        docker run -v /Users/alexeystyupan/Desktop/Docker:/home/jovyan -p 8888:8888 my_notebook
+        docker run -v /Users/alexeyk500/Desktop/Docker:/home/jovyan -p 8888:8888 my_notebook
         где my_notebook - имя созданного контейнера
 
 7) Docker compose - Использование нескольких контейнеров Docker одновременно
@@ -65,7 +67,7 @@
 1) Создать пустой репозиторий в текущей папке - git init
 2) Создать файл .gitignore - для файлов котрые не будем сохранять репозитории
 3) Все оставшиеся файлы добавить в Git - git add .
-4) Закомитить изменения - git commit -m'fineshed course'
+4) Закомитить изменения - git commit -m'fineshed course_24_08_20'
 5) Создать репозиторий на GitHub
 6) Передать данные на GitHub
 

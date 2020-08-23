@@ -1,0 +1,14 @@
+1) Загрузка первоначального контейнера docker с jupiter notebook
+    docker run -p 8888:8888 jupyter/scipy-notebook:17aba6048f44
+
+2) Импорт библиотек
+    a) создать dockerfile
+    б) прописать в dockerfile библиотеки котрые нужно импортировать
+        FROM jupyter/scipy-notebook:17aba6048f44
+            RUN pip install --upgrade pip
+            RUN pip install xgboost
+    г) смонтировать новый контейнер - выполнить build для контенера - docker build -t my_notebook .
+        где my_notebook - имя для контейнера который создаем
+    в) запуск смонтированнаого контенера командой 
+        docker run -v /Users/alexeystyupan/Desktop/Docker:/home/jovyan -p 8888:8888 my_notebook
+        где my_notebook - имя созданного контейнера
